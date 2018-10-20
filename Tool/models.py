@@ -1,29 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=500)
+    arhived = models.BooleanField()
+
+    def __str__(self):
+        return 'Course: ' + self.name
+
 class Student(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     college = models.CharField(max_length=100)
     branch = models.CharField(max_length=10)
     section = models.CharField(max_length=10)
+    optedCourses = models.ManyToManyField(Course, blank=True, related_name='students')
+    registrations = models.ManyToManyField(Course, blank=True, related_name='studentRequests')
 
     def __str__(self):
         return 'Student: ' + self.user.username
 
 class Mentor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    managedCourses = models.ManyToManyField(Course, blank=True, related_name='mentors')
+    courseRequests = models.ManyToManyField(Course, blank=True, related_name='mentorInvites')
 
     def __str__(self):
         return 'Mentor: ' + self.user.username
-
-class Course(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.CharField(max_length=500)
-    students = models.ManyToManyField(Student, blank=True)
-    mentors = models.ManyToManyField(Mentor, blank=True)
-
-    def __str__(self):
-        return 'Course: ' + self.name
 
 class Task(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -42,5 +45,4 @@ class Submission(models.Model):
     submission = models.FileField()
     
     def __str__(self):
-        return 'Submission in ' + self.course + ' by ' + self.student
-
+        return 'Submission in ' + self.course.__str__() + ' by ' + self.student.__str__()
