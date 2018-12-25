@@ -23,11 +23,21 @@ class DetailStudentOfCourse(RetrieveUpdateDestroyAPIView):
         return get_object_or_404(queryset, **conditions)
 
 class ListStudents(ListCreateAPIView):
-    serializer_class = StudentSerializer
     queryset = Student.objects.all()
 
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return StudentSerializer
+        else:
+            return StudentSignupSerializer
+
 class DetailStudent(RetrieveUpdateDestroyAPIView):
-    serializer_class = StudentSerializer
     queryset = Student.objects.all()
     lookup_field = 'id'
     lookup_url_kwarg = 's_id'
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return StudentSerializer
+        else:
+            return StudentSignupSerializer

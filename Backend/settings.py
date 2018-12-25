@@ -134,3 +134,5 @@ MEDIA_URL = '/media/'
 CORS_ORIGIN_WHITELIST = (
     'localhost:3000', 
 )
+
+AUTH_USER_MODEL = 'Tool.User'
