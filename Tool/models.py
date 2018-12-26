@@ -36,11 +36,12 @@ class Mentor(models.Model):
         return 'Mentor: ' + self.user.username
 
 class Task(models.Model):
-    course    = models.ForeignKey(Course, on_delete=models.CASCADE)
-    No        = models.IntegerField()
-    title     = models.CharField(max_length=100)
-    content   = models.CharField(blank=True, null=True, max_length=500)
-    questions = models.FileField(blank=True, null=True)
+    course     = models.ForeignKey(Course, on_delete=models.CASCADE)
+    title      = models.CharField(max_length=100)
+    content    = models.CharField(blank=True, null=True, max_length=500)
+    questions  = models.FileField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return 'Task: ' + self.title[:4] + '...'

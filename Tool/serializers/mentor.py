@@ -21,3 +21,13 @@ class MentorSignupSerializer(ModelSerializer):
         validated_data.pop('managedCourses')
         validated_data.pop('courseRequests')
         return Mentor.objects.create(user=user, **validated_data)
+
+    def update(self, instance, validated_data):
+        user                   = validated_data.pop('user')
+        instance.user.username = user.get('username', instance.user.username)
+        instance.user.email    = user.get('email', instance.user.email)
+        instance.user.password = user.get('password', instance.user.password)
+        instance.managedCourses.set(validated_data.pop('managedCourses'))
+        instance.courseRequests.set(validated_data.pop('courseRequests'))
+        instance.save()
+        return instance

@@ -23,6 +23,6 @@ urlpatterns = [
     
     # MENTOR VIEWS
     path('mentors/', ListMentors.as_view(), name='mentor-list'),
-    path('mentors/<int:s_id>/', DetailMentor.as_view(), name='mentor-detail'),
+    path('mentors/<int:m_id>/', DetailMentor.as_view(), name='mentor-detail'),
 
 ]
