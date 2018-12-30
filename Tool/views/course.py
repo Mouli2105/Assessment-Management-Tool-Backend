@@ -3,13 +3,13 @@ from Tool.serializers import *
 from rest_framework.generics import *
 
 class ListCourses(ListCreateAPIView):
-    queryset = Course.objects.all()
+    queryset         = Course.objects.all()
     serializer_class = CourseSerializer
 
 class DetailCourse(RetrieveUpdateDestroyAPIView):
-    queryset = Course.objects.all()
+    queryset         = Course.objects.all()
     serializer_class = CourseSerializer
-    lookup_field = 'id'
+    lookup_field     = 'id'
     lookup_url_kwarg = 'c_id'
 
 # class ListOptedCourses(ListAPIView):

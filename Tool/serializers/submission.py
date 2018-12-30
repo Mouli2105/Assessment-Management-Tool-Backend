@@ -3,5 +3,5 @@ from Tool.models import *
 
 class SubmissionSerializer(ModelSerializer):
     class Meta:
-        model = Submission
+        model  = Submission
         fields = '__all__'

@@ -11,11 +11,11 @@ class ListMentorsOfCourse(ListCreateAPIView):
         )
 
 class DetailMentorOfCourse(RetrieveUpdateDestroyAPIView):
-    queryset = Mentor.objects.all()
+    queryset         = Mentor.objects.all()
     serializer_class = MentorSerializer
 
     def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset   = self.filter_queryset(self.get_queryset())
         conditions = {
             'managedCourses__id': self.kwargs['c_id'],
             'id': self.kwargs['m_id']
@@ -32,8 +32,8 @@ class ListMentors(ListCreateAPIView):
             return MentorSignupSerializer
 
 class DetailMentor(RetrieveUpdateDestroyAPIView):
-    queryset = Mentor.objects.all()
-    lookup_field = 'id'
+    queryset         = Mentor.objects.all()
+    lookup_field     = 'id'
     lookup_url_kwarg = 'm_id'
 
     def get_serializer_class(self):

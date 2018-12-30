@@ -11,11 +11,11 @@ class ListStudentsOfCourse(ListCreateAPIView):
         )
 
 class DetailStudentOfCourse(RetrieveUpdateDestroyAPIView):
-    queryset = Student.objects.all()
+    queryset         = Student.objects.all()
     serializer_class = StudentSerializer
 
     def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset   = self.filter_queryset(self.get_queryset())
         conditions = {
             'optedCourses__id': self.kwargs['c_id'],
             'id': self.kwargs['s_id']
@@ -32,8 +32,8 @@ class ListStudents(ListCreateAPIView):
             return StudentSignupSerializer
 
 class DetailStudent(RetrieveUpdateDestroyAPIView):
-    queryset = Student.objects.all()
-    lookup_field = 'id'
+    queryset         = Student.objects.all()
+    lookup_field     = 'id'
     lookup_url_kwarg = 's_id'
 
     def get_serializer_class(self):

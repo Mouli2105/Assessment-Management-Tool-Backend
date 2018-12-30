@@ -9,11 +9,11 @@ class ListTasksOfCourse(ListCreateAPIView):
         return Task.objects.filter(course__id=self.kwargs['c_id'])
 
 class DetailTaskOfCourse(RetrieveDestroyAPIView):
-    queryset = Task.objects.all()
+    queryset         = Task.objects.all()
     serializer_class = TaskSerializer
 
     def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset   = self.filter_queryset(self.get_queryset())
         conditions = {
             'course__id': self.kwargs['c_id'],
             'id': self.kwargs['t_id']

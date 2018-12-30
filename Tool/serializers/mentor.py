@@ -6,14 +6,15 @@ class MentorSerializer(ModelSerializer):
     user = UserSerializer()
 
     class Meta:
-        model = Mentor
+        model  = Mentor
         fields = '__all__'
+        depth  = 1
 
 class MentorSignupSerializer(ModelSerializer):
     user = UserSignupSerializer()
 
     class Meta:
-        model = Mentor
+        model  = Mentor
         fields = '__all__'
 
     def create(self, validated_data):
@@ -23,11 +24,21 @@ class MentorSignupSerializer(ModelSerializer):
         return Mentor.objects.create(user=user, **validated_data)
 
     def update(self, instance, validated_data):
-        user                   = validated_data.pop('user')
-        instance.user.username = user.get('username', instance.user.username)
-        instance.user.email    = user.get('email', instance.user.email)
-        instance.user.password = user.get('password', instance.user.password)
-        instance.managedCourses.set(validated_data.pop('managedCourses'))
-        instance.courseRequests.set(validated_data.pop('courseRequests'))
+        try:
+            user                   = validated_data.pop('user')
+            instance.user.username = user.get('username', instance.user.username)
+            instance.user.email    = user.get('email', instance.user.email)
+            instance.user.password = user.get('password', instance.user.password)
+            instance.user.save()
+        except KeyError:
+            pass
+        try:
+            instance.managedCourses.set(validated_data.pop('managedCourses'))
+        except KeyError:
+            pass
+        try:
+            instance.courseRequests.set(validated_data.pop('courseRequests'))
+        except KeyError:
+            pass
         instance.save()
         return instance

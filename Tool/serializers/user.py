@@ -3,10 +3,10 @@ from Tool.models import User
 
 class UserSerializer(ModelSerializer):
     class Meta:
-        model = User
+        model  = User
         fields = ('username', 'email')
 
 class UserSignupSerializer(ModelSerializer):
     class Meta:
-        model = User
+        model  = User
         fields = ('username', 'email', 'password')

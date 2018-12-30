@@ -3,5 +3,5 @@ from Tool.models import *
 
 class CourseSerializer(ModelSerializer):
     class Meta:
-        model = Course
+        model  = Course
         fields = '__all__'

@@ -12,11 +12,11 @@ class ListSubmissionsOfTask(ListCreateAPIView):
         )
 
 class DetailSubmissionOfTask(RetrieveUpdateDestroyAPIView):
-    queryset = Submission.objects.all()
+    queryset         = Submission.objects.all()
     serializer_class = SubmissionSerializer
 
     def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset   = self.filter_queryset(self.get_queryset())
         conditions = {
             'course__id': self.kwargs['c_id'],
             'task__id': self.kwargs['t_id'],
