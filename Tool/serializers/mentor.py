@@ -26,7 +26,7 @@ class MentorSignupSerializer(ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        user = User.objects.create(**validated_data.pop('user'), is_mentor=True)
+        user = User.objects.create_user(**validated_data.pop('user'), is_mentor=True)
         validated_data.pop('managedCourses')
         validated_data.pop('courseRequests')
         return Mentor.objects.create(user=user, **validated_data)

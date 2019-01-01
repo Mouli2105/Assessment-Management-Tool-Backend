@@ -26,9 +26,8 @@ class StudentSignupSerializer(ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        user = User.objects.create(**validated_data.pop('user'), is_student=True)
+        user = User.objects.create_user(**validated_data.pop('user'), is_student=True)
         validated_data.pop('optedCourses')
-
         validated_data.pop('registrations')
         return Student.objects.create(user=user, **validated_data)
 

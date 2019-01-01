@@ -1,5 +1,6 @@
 from django.urls import path
 from Tool.views import *
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 app_name = 'assessment_tool'
 
@@ -24,5 +25,9 @@ urlpatterns = [
     # MENTOR VIEWS
     path('mentors/', ListSearchedMentors.as_view(), name='mentor-search'),
     path('mentors/<int:m_id>/', DetailMentor.as_view(), name='mentor-detail'),
+
+    # AUTH VIEWS
+    path('auth/token/', obtain_jwt_token),
+    path('auth/token/refresh/', refresh_jwt_token),
 
 ]
