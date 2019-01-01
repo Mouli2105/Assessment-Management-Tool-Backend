@@ -7,6 +7,14 @@ class MentorSerializer(ModelSerializer):
 
     class Meta:
         model  = Mentor
+        fields = ('id', 'user')
+        depth  = 1
+
+class MentorDetialSerializer(ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model  = Mentor
         fields = '__all__'
         depth  = 1
 

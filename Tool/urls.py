@@ -5,7 +5,7 @@ app_name = 'assessment_tool'
 
 urlpatterns = [
     # COURSE VIEWS
-    path('courses/', ListCourses.as_view(), name='course-list'),
+    path('courses/', ListSearchedCourses.as_view(), name='course-search'),
     path('courses/<int:c_id>/', DetailCourse.as_view(), name='course-detail'),
     path('courses/<int:c_id>/tasks/', ListTasksOfCourse.as_view(), name='course-task-list'),
     path('courses/<int:c_id>/tasks/<int:t_id>/', DetailTaskOfCourse.as_view(), name='course-task-detail'),
@@ -18,11 +18,11 @@ urlpatterns = [
     path('courses/<int:c_id>/registrations/', ListCourseRegistrations.as_view(), name='course-registration-list'),
 
     # STUDENT VIEWS
-    path('students/', ListStudents.as_view(), name='student-list'),
+    path('students/', ListSearchedStudents.as_view(), name='student-search'),
     path('students/<int:s_id>/', DetailStudent.as_view(), name='student-detail'),
     
     # MENTOR VIEWS
-    path('mentors/', ListMentors.as_view(), name='mentor-list'),
+    path('mentors/', ListSearchedMentors.as_view(), name='mentor-search'),
     path('mentors/<int:m_id>/', DetailMentor.as_view(), name='mentor-detail'),
 
 ]

@@ -22,8 +22,15 @@ class DetailMentorOfCourse(RetrieveUpdateDestroyAPIView):
         }
         return get_object_or_404(queryset, **conditions)
 
-class ListMentors(ListCreateAPIView):
-    queryset = Mentor.objects.all()
+class ListSearchedMentors(ListCreateAPIView):
+    def get_queryset(self):
+        try:
+            username = self.request.GET['username']
+            if len(username) <= 0:
+                raise Exception
+            return Mentor.objects.filter(user__username__iregex=username)
+        except:
+            return Mentor.objects.all()
     
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -38,6 +45,6 @@ class DetailMentor(RetrieveUpdateDestroyAPIView):
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
-            return MentorSerializer
+            return MentorDetialSerializer
         else:
             return MentorSignupSerializer        

@@ -6,7 +6,7 @@ class ListStudentsOfCourse(ListCreateAPIView):
     serializer_class = StudentSerializer
 
     def get_queryset(self):
-        return Student.objects.filter(
+        return Student.objects.filter(  
             optedCourses__id=self.kwargs['c_id']            
         )
 
@@ -22,8 +22,15 @@ class DetailStudentOfCourse(RetrieveUpdateDestroyAPIView):
         }
         return get_object_or_404(queryset, **conditions)
 
-class ListStudents(ListCreateAPIView):
-    queryset = Student.objects.all()
+class ListSearchedStudents(ListAPIView):
+    def get_queryset(self):
+        try:
+            username = self.request.GET['username']
+            if len(username) <= 0:
+                raise Exception
+            return Student.objects.filter(user__username__iregex=username)
+        except:
+            return Student.objects.all()
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -38,6 +45,6 @@ class DetailStudent(RetrieveUpdateDestroyAPIView):
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
-            return StudentSerializer
+            return StudentDetailSerializer
         else:
             return StudentSignupSerializer

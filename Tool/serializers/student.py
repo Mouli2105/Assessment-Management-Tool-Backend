@@ -7,6 +7,14 @@ class StudentSerializer(ModelSerializer):
     
     class Meta:
         model  = Student
+        fields = ('id', 'user', 'college', 'branch', 'section')
+        depth  = 1
+
+class StudentDetailSerializer(ModelSerializer):
+    user = UserSerializer()
+    
+    class Meta:
+        model  = Student
         fields = '__all__'
         depth  = 1
 

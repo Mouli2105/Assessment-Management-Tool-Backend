@@ -2,8 +2,16 @@ from Tool.models import *
 from Tool.serializers import *
 from rest_framework.generics import *
 
-class ListCourses(ListCreateAPIView):
-    queryset         = Course.objects.all()
+class ListSearchedCourses(ListCreateAPIView):
+    def get_queryset(self):
+        try:
+            name = self.request.GET['name']
+            if len(name) <= 0:
+                raise Exception
+            return Course.objects.filter(name__iregex=name)
+        except:
+            return Course.objects.all()
+
     serializer_class = CourseSerializer
 
 class DetailCourse(RetrieveUpdateDestroyAPIView):
