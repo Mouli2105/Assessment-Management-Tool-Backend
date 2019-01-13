@@ -1,8 +1,9 @@
 from Tool.models import *
 from Tool.serializers import *
 from rest_framework.generics import *
+from rest_framework.permissions import *
 
-class ListStudentsOfCourse(ListCreateAPIView):
+class ListStudentsOfCourse(ListAPIView):
     serializer_class = StudentSerializer
 
     def get_queryset(self):
@@ -22,7 +23,9 @@ class DetailStudentOfCourse(RetrieveUpdateDestroyAPIView):
         }
         return get_object_or_404(queryset, **conditions)
 
-class ListSearchedStudents(ListAPIView):
+class ListSearchedStudents(ListCreateAPIView):
+    permission_classes = (AllowAny, )
+
     def get_queryset(self):
         try:
             username = self.request.GET['username']

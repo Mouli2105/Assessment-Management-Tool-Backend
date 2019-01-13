@@ -1,6 +1,8 @@
 from rest_framework.serializers import ModelSerializer
 from Tool.models import *
 from Tool.serializers.user import UserSerializer, UserSignupSerializer
+from rest_framework import serializers
+from rest_framework_jwt.settings import api_settings
 
 class MentorSerializer(ModelSerializer):
     user = UserSerializer()
@@ -19,11 +21,19 @@ class MentorDetialSerializer(ModelSerializer):
         depth  = 1
 
 class MentorSignupSerializer(ModelSerializer):
-    user = UserSignupSerializer()
+    user  = UserSignupSerializer()
+    token = serializers.SerializerMethodField()
 
     class Meta:
         model  = Mentor
         fields = '__all__'
+
+    def get_token(self, obj):
+        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        jwt_encode_handler  = api_settings.JWT_ENCODE_HANDLER
+        payload             = jwt_payload_handler(obj.user)
+        token               = jwt_encode_handler(payload)
+        return token
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data.pop('user'), is_mentor=True)
